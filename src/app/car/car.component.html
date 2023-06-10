@@ -1,0 +1,105 @@
+<div style="text-align: center;">
+  <h1>Dodaj auto</h1>
+  <h1>Modyfikuj auto</h1>
+  <form [formGroup]="form" (ngSubmit)="saveCar()">
+    <p>
+      <mat-form-field>
+        <mat-label>Marka</mat-label>
+        <input matInput placeholder="Wpisz markę" formControlName="mark">
+        <mat-hint>Wpisz markę</mat-hint>
+        <mat-error>Podanie marki jest obowiązkowe</mat-error>
+        <mat-error *ngIf="form.controls['mark'].errors?.['minlength']">
+          Wpisz markę
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Model</mat-label>
+        <input matInput placeholder="Wpisz model" formControlName="model">
+        <mat-hint>Wpisz model</mat-hint>
+        <mat-error>Podanie modelu jest obowiązkowe</mat-error>
+        <mat-error *ngIf="form.controls['model'].errors?.['minlength']">
+          Wpisz model
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Kolor</mat-label>
+        <input matInput placeholder="Wpisz kolor" formControlName="color">
+        <mat-hint>Wpisz kolor</mat-hint>
+        <mat-error>Podanie koloru jest obowiązkowe</mat-error>
+        <mat-error *ngIf="form.controls['color'].errors?.['minlength']">
+          Wpisz kolor
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Rok</mat-label>
+        <input matInput placeholder="Wpisz rok" formControlName="year" type="number">
+        <mat-hint>Wpisz rok</mat-hint>
+        <mat-error>Podanie rocznika jest obowiązkowe</mat-error>
+        <mat-error *ngIf="form.controls['year'].errors?.['minlength']">
+          Wpisz rok
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Cena</mat-label>
+        <input matInput placeholder="Wpisz cenę" formControlName="price" type="number">
+        <mat-hint>Wpisz cenę</mat-hint>
+        <mat-error>Podanie ceny jest obowiązkowe</mat-error>
+        <mat-error *ngIf="form.controls['price'].errors?.['minlength']">
+          Wpisz cenę
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Wybierz wypożyczalnię</mat-label>
+        <mat-select [(ngModel)]="selectedRental">
+          <mat-option *ngFor="let option of rentals" [value]="option.id">{{option.city}} {{option.address}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <div id="photos">
+      <div style="display: inline-block; text-align: center; vertical-align: top">
+        <p>
+          <button type="button" mat-raised-button (click)="fileInput1.click()">Wybierz zdjęcie</button>
+          <input hidden (change)="onFileSelected($event, 1)" #fileInput1 type="file" accept="image/png, image/jpeg">
+          <br><br>
+          <span class="file-name">{{selectedFile1?.name}}</span>
+        </p>
+        <p>
+          <img *ngIf="url1" [src]="url1" style="width: 25vw;">
+        </p>
+      </div>
+      <div style="margin-left:5vw; margin-right: 5vw;display: inline-block; text-align: center; vertical-align: top">
+        <p>
+          <button type="button" mat-raised-button (click)="fileInput2.click()">Wybierz zdjęcie</button>
+          <input hidden (change)="onFileSelected($event, 2)" #fileInput2 type="file" accept="image/png, image/jpeg">
+          <br><br>
+          <span class="file-name">{{selectedFile2?.name}}</span>
+        </p>
+        <p>
+          <img *ngIf="url2" [src]="url2" style="width: 25vw;">
+        </p>
+      </div>
+      <div style="margin-left:5vw;display: inline-block; text-align: center; vertical-align: top">
+        <p>
+          <button type="button" mat-raised-button (click)="fileInput3.click()">Wybierz zdjęcie</button>
+          <input hidden (change)="onFileSelected($event, 3)" #fileInput3 type="file" accept="image/png, image/jpeg">
+          <br><br>
+          <span class="file-name">{{selectedFile3?.name}}</span>
+        </p>
+        <p>
+          <img *ngIf="url3" [src]="url3" style="width: 25vw;">
+        </p>
+      </div>
+    </div>
+    <button mat-raised-button type="submit">Zapisz</button>
+  </form>
+</div>
