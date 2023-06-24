@@ -26,6 +26,12 @@ import {NgxMatFileInputModule} from "@angular-material-components/file-input";
 import { SpinnerComponent } from './spinner/spinner.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
+import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { BoardUserComponent } from './board-user/board-user.component';
+import { CarToRentComponent } from './car-to-rent/car-to-rent.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -36,7 +42,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     LoginComponent,
     RegisterComponent,
     RentalComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    BoardModeratorComponent,
+    BoardAdminComponent,
+    BoardUserComponent,
+    CarToRentComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +66,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatNativeDateModule,
     NgxMatFileInputModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatTableModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

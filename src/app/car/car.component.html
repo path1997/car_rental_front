@@ -1,11 +1,11 @@
 <div style="text-align: center;">
   <h1>Dodaj auto</h1>
   <h1>Modyfikuj auto</h1>
-  <form [formGroup]="form" (ngSubmit)="saveCar()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <p>
       <mat-form-field>
         <mat-label>Marka</mat-label>
-        <input matInput placeholder="Wpisz markę" formControlName="mark">
+        <input matInput placeholder="Wpisz markę" formControlName="mark" [value]="car.mark">
         <mat-hint>Wpisz markę</mat-hint>
         <mat-error>Podanie marki jest obowiązkowe</mat-error>
         <mat-error *ngIf="form.controls['mark'].errors?.['minlength']">
@@ -16,7 +16,7 @@
     <p>
       <mat-form-field>
         <mat-label>Model</mat-label>
-        <input matInput placeholder="Wpisz model" formControlName="model">
+        <input matInput placeholder="Wpisz model" formControlName="model" [value]="car.model">
         <mat-hint>Wpisz model</mat-hint>
         <mat-error>Podanie modelu jest obowiązkowe</mat-error>
         <mat-error *ngIf="form.controls['model'].errors?.['minlength']">
@@ -27,7 +27,7 @@
     <p>
       <mat-form-field>
         <mat-label>Kolor</mat-label>
-        <input matInput placeholder="Wpisz kolor" formControlName="color">
+        <input matInput placeholder="Wpisz kolor" formControlName="color" [value]="car.color">
         <mat-hint>Wpisz kolor</mat-hint>
         <mat-error>Podanie koloru jest obowiązkowe</mat-error>
         <mat-error *ngIf="form.controls['color'].errors?.['minlength']">
@@ -38,7 +38,7 @@
     <p>
       <mat-form-field>
         <mat-label>Rok</mat-label>
-        <input matInput placeholder="Wpisz rok" formControlName="year" type="number">
+        <input matInput placeholder="Wpisz rok" formControlName="year" type="number" [value]="car.year.toString()">
         <mat-hint>Wpisz rok</mat-hint>
         <mat-error>Podanie rocznika jest obowiązkowe</mat-error>
         <mat-error *ngIf="form.controls['year'].errors?.['minlength']">
@@ -49,7 +49,7 @@
     <p>
       <mat-form-field>
         <mat-label>Cena</mat-label>
-        <input matInput placeholder="Wpisz cenę" formControlName="price" type="number">
+        <input matInput placeholder="Wpisz cenę" formControlName="price" type="number" [value]="car.year.toString()">
         <mat-hint>Wpisz cenę</mat-hint>
         <mat-error>Podanie ceny jest obowiązkowe</mat-error>
         <mat-error *ngIf="form.controls['price'].errors?.['minlength']">
@@ -60,7 +60,7 @@
     <p>
       <mat-form-field>
         <mat-label>Wybierz wypożyczalnię</mat-label>
-        <mat-select [(ngModel)]="selectedRental">
+        <mat-select formControlName="rental">
           <mat-option *ngFor="let option of rentals" [value]="option.id">{{option.city}} {{option.address}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -69,7 +69,7 @@
       <div style="display: inline-block; text-align: center; vertical-align: top">
         <p>
           <button type="button" mat-raised-button (click)="fileInput1.click()">Wybierz zdjęcie</button>
-          <input hidden (change)="onFileSelected($event, 1)" #fileInput1 type="file" accept="image/png, image/jpeg">
+          <input hidden (change)="onFileSelected($event, 1)" #fileInput1 type="file" accept="image/png, image/jpeg" [value]="car.photo1">
           <br><br>
           <span class="file-name">{{selectedFile1?.name}}</span>
         </p>
@@ -80,7 +80,7 @@
       <div style="margin-left:5vw; margin-right: 5vw;display: inline-block; text-align: center; vertical-align: top">
         <p>
           <button type="button" mat-raised-button (click)="fileInput2.click()">Wybierz zdjęcie</button>
-          <input hidden (change)="onFileSelected($event, 2)" #fileInput2 type="file" accept="image/png, image/jpeg">
+          <input hidden (change)="onFileSelected($event, 2)" #fileInput2 type="file" accept="image/png, image/jpeg" [value]="car.photo2">
           <br><br>
           <span class="file-name">{{selectedFile2?.name}}</span>
         </p>
@@ -91,7 +91,7 @@
       <div style="margin-left:5vw;display: inline-block; text-align: center; vertical-align: top">
         <p>
           <button type="button" mat-raised-button (click)="fileInput3.click()">Wybierz zdjęcie</button>
-          <input hidden (change)="onFileSelected($event, 3)" #fileInput3 type="file" accept="image/png, image/jpeg">
+          <input hidden (change)="onFileSelected($event, 3)" #fileInput3 type="file" accept="image/png, image/jpeg" [value]="car.photo3">
           <br><br>
           <span class="file-name">{{selectedFile3?.name}}</span>
         </p>

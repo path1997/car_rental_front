@@ -5,7 +5,7 @@
     <p>
       <mat-form-field>
         <mat-label>Miasto</mat-label>
-        <input matInput placeholder="Wpisz miasto" formControlName="city">
+        <input matInput placeholder="Wpisz miasto" formControlName="city" [value]="rental.city">
         <mat-icon matSuffix>home</mat-icon>
         <mat-hint>Wpisz miasto</mat-hint>
         <mat-error>Podanie miasta jest obowiązkowe</mat-error>
@@ -17,7 +17,7 @@
     <p>
       <mat-form-field>
         <mat-label>Adres</mat-label>
-        <input matInput placeholder="Wpisz adres" formControlName="address">
+        <input matInput placeholder="Wpisz adres" formControlName="address" [value]="rental.address">
         <mat-icon matSuffix>home</mat-icon>
         <mat-hint>Wpisz adres biura</mat-hint>
         <mat-error>Podanie adresu jest obowiązkowe</mat-error>
@@ -29,7 +29,7 @@
     <p>
       <mat-form-field>
         <mat-label>Email:</mat-label>
-        <input matInput type="email" formControlName="email" placeholder="Wpisz adres email">
+        <input matInput type="email" formControlName="email" placeholder="Wpisz adres email" [value]="rental.email">
         <mat-icon matSuffix>mail_outline</mat-icon>
         <mat-hint>Wpisz adres email</mat-hint>
         <mat-error *ngIf="form.controls['email'].errors?.['required']">Adres email jest wymagany</mat-error>
@@ -39,7 +39,7 @@
     <p>
       <mat-form-field>
         <mat-label>Numer telefonu</mat-label>
-        <input matInput type="phone" formControlName="phone" placeholder="Wpisz numer telefonu">
+        <input matInput type="phone" formControlName="phone" placeholder="Wpisz numer telefonu" [value]="rental.phone">
         <mat-icon matSuffix>phone</mat-icon>
         <mat-hint>Wpisz numer telefonu</mat-hint>
         <mat-error>Podanie numeru telefonu jest obowiązkowe</mat-error>
@@ -51,14 +51,14 @@
     <p>
       <mat-form-field>
         <mat-label>Wybierz moderatora</mat-label>
-        <mat-select [(ngModel)]="selectedModerators" multiple>
+        <mat-select [(ngModel)]="selectedModerators" multiple [value]="rental.moderators">
           <mat-option *ngFor="let option of moderators" [value]="option.id">{{option.firstNme}} {{option.secondName}}</mat-option>
         </mat-select>
       </mat-form-field>
     </p>
     <p>
       <button type="button" mat-raised-button (click)="fileInput.click()">Wybierz zdjęcie</button>
-      <input hidden (change)="onFileSelected($event)" #fileInput type="file" accept="image/png, image/jpeg" >
+      <input hidden (change)="onFileSelected($event)" #fileInput type="file" accept="image/png, image/jpeg" [value]="rental.photo">
       <br><br>
       <span class="file-name">{{selectedFile?.name}}</span>
     </p>

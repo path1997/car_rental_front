@@ -1,1 +1,15 @@
-<button mat-raised-button>Basic</button>
+<div style="text-align: center">
+  <h1>Wypożyczalnia Amarok</h1>
+  <h3>Aktualnie dostępne auta:</h3>
+
+  <div *ngFor="let car of cars">
+    <div style="display: inline-block">
+      <img [src]="getImageFromBaseArray(car)" style="width: 30vw;">
+    </div>
+    <div style="display: inline-block;vertical-align: top;margin-left: 1vw; padding-top:50px; text-align: left">
+      <h3>{{car.mark}} {{car.model}}</h3>
+      <h3>Rok: {{car.year}}</h3>
+      <h3>Cena za dobę: {{car.price}}</h3>
+    </div>
+  </div>
+</div>

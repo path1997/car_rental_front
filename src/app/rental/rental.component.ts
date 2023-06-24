@@ -4,7 +4,9 @@ import {MaxSizeValidator} from "@angular-material-components/file-input";
 import {RestService} from "../rest.service";
 import {SnackBarService} from "../snack-bar.service";
 import {SpinnerService} from "../spinner/spinner.service";
-import {User} from "../models/rental";
+import {Rental, User} from "../models/rental";
+import {ActivatedRoute} from "@angular/router";
+import {Car} from "../models/car";
 
 @Component({
   selector: 'app-rental',
@@ -17,16 +19,39 @@ export class RentalComponent implements OnInit{
   url: any = null;
   moderators: Array<User> = [];
   selectedModerators: Array<number> = [];
-  constructor(private fb: FormBuilder, private service:RestService, private snackBar: SnackBarService, private spinner: SpinnerService) { }
+  rentalId: number = 0;
+  // @ts-ignore
+  rental: Rental;
+  constructor(private fb: FormBuilder, private service:RestService, private snackBar: SnackBarService, private spinner: SpinnerService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getModerators();
-    this.form = this.fb.group({
-      city: [null, [Validators.required, Validators.minLength(1)]],
-      address: [null, [Validators.required, Validators.minLength(1)]],
-      email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      phone: [null, [Validators.required, Validators.minLength(1)]],
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        if(params['id']){
+          this.rentalId = params['id'];
+          this.loadForm();
+        }
+      },
+      error: (e: any) => {
+        this.snackBar.openSnackBar(2, "Błąd przy pobieraniu id ogłoszenia");
+      }
     });
+    if(this.rentalId!= 0) {
+      this.form = this.fb.group({
+        city: [this.rental.city, [Validators.required, Validators.minLength(1)]],
+        address: [this.rental.address, [Validators.required, Validators.minLength(1)]],
+        email: [this.rental.email, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        phone: [this.rental.phone, [Validators.required, Validators.minLength(1)]],
+      });
+    } else {
+      this.form = this.fb.group({
+        city: [null, [Validators.required, Validators.minLength(1)]],
+        address: [null, [Validators.required, Validators.minLength(1)]],
+        email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+        phone: [null, [Validators.required, Validators.minLength(1)]],
+      });
+    }
   }
 
   saveRental() {
@@ -77,6 +102,20 @@ export class RentalComponent implements OnInit{
         this.snackBar.openSnackBar(2, "Błąd przy pobieraniu listy moderatorów");
         this.spinner.hideSpinner();
       }, complete: () => {
+        this.spinner.hideSpinner();
+      }
+    });
+  }
+
+  loadForm() {
+    this.spinner.showSpinner();
+    this.service.getRental(this.rentalId).subscribe({
+      next: (response: Rental) =>{
+        this.spinner.hideSpinner();
+        this.rental = response;
+      },
+      error: () => {
+        this.snackBar.openSnackBar(2, "Błąd przy pobieraniu samochodu");
         this.spinner.hideSpinner();
       }
     });
