@@ -1,1 +1,20 @@
-<p>car-to-rent works!</p>
+<div style="text-align: center">
+  <mat-form-field>
+    <mat-label>Szukaj</mat-label>
+    <input matInput type="search" placeholder="Szukaj" (change)="filterCars()" [(ngModel)]="searchWord">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <div *ngFor="let car of cars">
+    <div style="width: 500px; height: 200px; margin: 0 auto; display: inline-block">
+      <image-slider [slides]="[car.photo1, car.photo2, car.photo3]"></image-slider>
+    </div>
+    <div style="display: inline-block;vertical-align: top;margin-left: 1vw; padding-top:50px; text-align: left">
+      <h3>{{car.rental.city}} {{car.rental.address}}</h3>
+      <h3>{{car.mark}} {{car.model}}</h3>
+      <h3>Rok: {{car.year}}</h3>
+      <h3>Cena za dobę: {{car.price}}</h3>
+      <button type="button" mat-raised-button (click)="rentCar(car.id)">Wynajmij</button>
+    </div>
+  </div>
+
+</div>

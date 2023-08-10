@@ -32,6 +32,9 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { CarToRentComponent } from './car-to-rent/car-to-rent.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTableModule} from "@angular/material/table";
+import {MatCardModule} from "@angular/material/card";
+import { ImageSliderComponent } from './image-slider/image-slider.component';
+import {ImageSliderModule} from "./image-slider/image-slider.module";
 
 @NgModule({
   declarations: [
@@ -46,30 +49,32 @@ import {MatTableModule} from "@angular/material/table";
     BoardModeratorComponent,
     BoardAdminComponent,
     BoardUserComponent,
-    CarToRentComponent
+    CarToRentComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule,
-    HttpClientModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    NgxMatFileInputModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatExpansionModule,
-    MatTableModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule,
+        HttpClientModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        NgxMatFileInputModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule,
+        MatExpansionModule,
+        MatTableModule,
+        MatCardModule,
+        ImageSliderModule
+    ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })

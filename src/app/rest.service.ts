@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Rental, User} from "./models/rental";
 import {Car} from "./models/car";
+import {Order} from "./models/order";
 
 const apiUrl = "http://localhost:8080/api/main"
 @Injectable({
@@ -68,5 +69,21 @@ export class RestService {
 
   getAvailableCars(){
     return this.http.get<Array<Car>>(apiUrl + "/home")
+  }
+
+  getUserOrders(){
+    return this.http.get<Array<Order>>(apiUrl + "/user/history");
+  }
+
+  giveBackCar(orderId: number, rentalId: string){
+    return this.http.post(apiUrl + "/user/returncar/" + orderId + "/" + rentalId, "");
+  }
+
+  rentCar(carId: number){
+    return this.http.post(apiUrl + "/user/rentcar/" + carId, "")
+  }
+
+  getAllCars(){
+    return this.http.get<Array<Car>>(apiUrl + "/car/get/all")
   }
 }

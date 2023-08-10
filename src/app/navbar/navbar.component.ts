@@ -3,6 +3,7 @@ import {StorageService} from "../storage.service";
 import {AuthService} from "../auth.service";
 import {EventBusService} from "../event-bus.service";
 import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -19,9 +20,10 @@ export class NavbarComponent implements OnInit{
   eventBusSub?: Subscription;
 
   constructor(
-    private storageService: StorageService,
+    public storageService: StorageService,
     private authService: AuthService,
-    private eventBusService: EventBusService
+    private eventBusService: EventBusService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
@@ -45,7 +47,7 @@ export class NavbarComponent implements OnInit{
     this.authService.logout().subscribe({
       next: res => {
         this.storageService.clean();
-
+        this.router.navigate([''])
         window.location.reload();
       },
       error: err => {
@@ -53,4 +55,6 @@ export class NavbarComponent implements OnInit{
       }
     });
   }
+
+  protected readonly console = console;
 }

@@ -32,6 +32,7 @@ export class CarComponent implements OnInit{
       next: (params) => {
         if(params['id']){
           this.carId = params['id'];
+          console.log("load form")
           this.loadForm();
         }
       },
@@ -39,25 +40,49 @@ export class CarComponent implements OnInit{
         this.snackBar.openSnackBar(2, "Błąd przy pobieraniu id ogłoszenia");
       }
     });
+    console.log(this.carId)
     if(this.carId!= 0) {
+      console.log("if 0")
+      let photo1 = new File([this.dataURItoBlob(this.car.photo1)], "photo1.jpg", { type: 'image/png' });
+      let photo2 = new File([this.dataURItoBlob(this.car.photo2)], "photo2.jpg", { type: 'image/png' });
+      let photo3 = new File([this.dataURItoBlob(this.car.photo3)], "photo3.jpg", { type: 'image/png' });
       this.form = this.fb.group({
         mark: [this.car.mark, [Validators.required, Validators.minLength(1)]],
         model: [this.car.model, [Validators.required, Validators.minLength(1)]],
         color: [this.car.color, [Validators.required, Validators.minLength(1)]],
         year: [this.car.year, [Validators.required, Validators.minLength(4)]],
         price: [this.car.price, [Validators.required, Validators.minLength(1)]],
-        rental: [this.car.rental.id]
+        rental: [this.car.rental.id],
+        photo1: [photo1],
+        photo2: [photo2],
+        photo3: [photo3]
       });
     } else {
+      console.log("if 1")
       this.form = this.fb.group({
         mark: [null, [Validators.required, Validators.minLength(1)]],
         model: [null, [Validators.required, Validators.minLength(1)]],
         color: [null, [Validators.required, Validators.minLength(1)]],
         year: [null, [Validators.required, Validators.minLength(4)]],
         price: [null, [Validators.required, Validators.minLength(1)]],
-        rental: [null]
+        rental: [null],
+        photo1: [null],
+        photo2: [null],
+        photo3: [null]
       });
+      console.log("if 1")
     }
+  }
+
+  dataURItoBlob(dataURI: any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    return blob;
   }
 
   loadForm(){

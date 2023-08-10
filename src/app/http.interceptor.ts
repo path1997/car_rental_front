@@ -12,6 +12,8 @@ import {StorageService} from "./storage.service";
 import {EventBusService} from "./event-bus.service";
 import {EventData} from "./event.class";
 
+const TOKEN_HEADER_KEY = 'Authorization';
+
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
   private isRefreshing = false;
@@ -19,11 +21,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService, private eventBusService: EventBusService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req = req.clone({
-      withCredentials: true,
-    });
+    let authReq = req;
+    const token = this.storageService.getToken();
+    if (token != null) {
+      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+    }
 
-    return next.handle(req).pipe(
+    return next.handle(authReq).pipe(
       catchError((error) => {
         if (
           error instanceof HttpErrorResponse &&

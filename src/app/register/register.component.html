@@ -1,80 +1,114 @@
-<form
-  *ngIf="!isSuccessful"
-  name="form"
-  (ngSubmit)="f.form.valid && onSubmit()"
-  #f="ngForm"
-  novalidate
->
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input
-      type="text"
-      class="form-control"
-      name="username"
-      [(ngModel)]="form.username"
-      required
-      minlength="3"
-      maxlength="20"
-      #username="ngModel"
-      [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
-    />
-    <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
-      <div *ngIf="username.errors['required']">Username is required</div>
-      <div *ngIf="username.errors['minlength']">
-        Username must be at least 3 characters
-      </div>
-      <div *ngIf="username.errors['maxlength']">
-        Username must be at most 20 characters
+<mat-card style="padding: 50px">
+  <mat-card-title>Zarejestruj się</mat-card-title>
+  <br>
+  <form
+    *ngIf="!isSuccessful"
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <div>
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Imię"
+          name="firstName"
+          [(ngModel)]="form.firstName"
+          required
+          matInput
+          #firstName="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }"
+        >
+      </mat-form-field>
+      <div class="alert" *ngIf="firstName.errors && f.submitted">
+        <div *ngIf="firstName.errors['required']">Imię jest wymagane</div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input
-      type="email"
-      class="form-control"
-      name="email"
-      [(ngModel)]="form.email"
-      required
-      email
-      #email="ngModel"
-      [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-    />
-    <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
-      <div *ngIf="email.errors['required']">Email is required</div>
-      <div *ngIf="email.errors['email']">
-        Email must be a valid email address
+    <div>
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Nazwisko"
+          name="secondName"
+          [(ngModel)]="form.secondName"
+          required
+          matInput
+          #secondName="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && secondName.errors }"
+        >
+      </mat-form-field>
+      <div class="alert" *ngIf="secondName.errors && f.submitted">
+        <div *ngIf="secondName.errors['required']">Nazwisko jest wymagane</div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      name="password"
-      [(ngModel)]="form.password"
-      required
-      minlength="6"
-      #password="ngModel"
-      [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
-    />
-    <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
-      <div *ngIf="password.errors['required']">Password is required</div>
-      <div *ngIf="password.errors['minlength']">
-        Password must be at least 6 characters
+    <div>
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Numer telefonu"
+          name="phone"
+          [(ngModel)]="form.phone"
+          required
+          matInput
+          minlength="9"
+          maxlength="9"
+          #phone="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && phone.errors }"
+        >
+      </mat-form-field>
+      <div class="alert" *ngIf="phone.errors && f.submitted">
+        <div *ngIf="phone.errors['required']">Numer telefonu jest wymagany</div>
+        <div *ngIf="phone.errors['minlength'] || phone.errors['maxlength']">
+          Numer telefonu musi zawierać 9 znaków
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <button class="btn btn-primary btn-block">Sign Up</button>
-  </div>
-
-  <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-    Signup failed!<br />{{ errorMessage }}
-  </div>
-</form>
-
-<div class="alert alert-success" *ngIf="isSuccessful">
-  Your registration is successful!
-</div>
+    <div>
+      <mat-form-field>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          matInput
+          placeholder="Adres email"
+          #email="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+        />
+      </mat-form-field>
+      <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+        <div *ngIf="email.errors['required']">Adres email jest obowiązkowy</div>
+        <div *ngIf="email.errors['email']">
+          Nieprawidłowy format adresu email
+        </div>
+      </div>
+    </div>
+    <div>
+      <mat-form-field>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="6"
+          placeholder="Hasło"
+          matInput
+          #password="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+        />
+      </mat-form-field>
+      <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+        <div *ngIf="password.errors['required']">Hasło jest wymagane</div>
+        <div *ngIf="password.errors['minlength']">
+          Hasło musi mieć co najmniej 6 znaków
+        </div>
+      </div>
+    </div>
+    <div class="button">
+      <button mat-button>Zarejestruj</button>
+    </div>
+  </form>
+</mat-card>

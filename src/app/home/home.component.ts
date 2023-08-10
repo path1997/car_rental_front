@@ -4,6 +4,7 @@ import {RestService} from "../rest.service";
 import {SnackBarService} from "../snack-bar.service";
 import {SpinnerService} from "../spinner/spinner.service";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {StorageService} from "../storage.service";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 export class HomeComponent implements OnInit{
   cars: Array<Car> = [];
 
-  constructor(private service:RestService, private snackBar: SnackBarService, private spinner: SpinnerService, private sanitizer: DomSanitizer) {
+  constructor(private service:RestService, private storageService: StorageService, private snackBar: SnackBarService, private spinner: SpinnerService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -38,5 +39,20 @@ export class HomeComponent implements OnInit{
 
   getImageFromBaseArray(car: Car){
     return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + car.photo1)
+  }
+
+  rentCar(id: number) {
+    if(!this.storageService.isLoggedIn()){
+      this.snackBar.openSnackBar(2, "Zaloguj się by wypożyczyć auto");
+      return;
+    }
+    this.service.rentCar(id).subscribe({
+      next: value => {
+        this.getAvailableCars()
+      },
+      error: err => {
+        this.snackBar.openSnackBar(2, "Błąd przy wypożyczaniu auta");
+      }
+    })
   }
 }

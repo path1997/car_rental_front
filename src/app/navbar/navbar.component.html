@@ -1,16 +1,11 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>My App</span>
+  <button routerLink="/" mat-button>Wypożyczalnia Amarok</button>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-  <a routerLink="/login" *ngIf="!isLoggedIn" mat-raised-button>Zaloguj się</a>
-  <a routerLink="/register" *ngIf="!isLoggedIn" mat-raised-button>Zarejestruj się</a>
-  <a href class="nav-link" *ngIf="isLoggedIn" (click)="logout()" mat-raised-button>Wyloguj się</a>
+  <button routerLink="/car-to-rent" mat-button>Lista aut</button>
+  <button routerLink="/login" *ngIf="!storageService.isLoggedIn()" mat-button>Zaloguj się</button>
+  <button routerLink="/register" *ngIf="!storageService.isLoggedIn()" mat-button>Zarejestruj się</button>
+  <button routerLink="/user" *ngIf="storageService.isLoggedIn()" mat-button>Moje konto</button>
+  <button routerLink="/car" *ngIf="storageService.isLoggedIn() && storageService.getUser().roles.includes('ROLE_MODERATOR')" mat-button>Dodaj auto</button>
+  <button routerLink="/rental" *ngIf="storageService.isLoggedIn() && storageService.getUser().roles.includes('ROLE_MODERATOR')" mat-button>Dodaj wypożyczalnię</button>
+  <button href *ngIf="storageService.isLoggedIn()" (click)="logout()" mat-button>Wyloguj się</button>
 </mat-toolbar>

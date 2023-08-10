@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth.service";
+import {SnackBarService} from "../snack-bar.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -8,7 +10,9 @@ import {AuthService} from "../auth.service";
 })
 export class RegisterComponent implements OnInit {
   form: any = {
-    username: null,
+    firstName: null,
+    secondName: null,
+    phone: null,
     email: null,
     password: null
   };
@@ -16,23 +20,25 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private snackBar: SnackBarService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
+    const { firstName, secondName, phone, email, password } = this.form;
 
-    this.authService.register(username, email, password).subscribe({
+    this.authService.register(firstName, secondName, phone, email, password).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.router.navigate(['login'])
       },
       error: err => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
+        this.snackBar.openSnackBar(2, "Błąd podczas tworzenia konta");
       }
     });
   }
